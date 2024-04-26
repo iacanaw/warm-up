@@ -36,7 +36,7 @@ compile:
 	$(GCC_COMPILER) $(CFLAGS) $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
 
 cppcheck:
-	cppcheck --enable=all --suppress=unmatchedSuppression:{} --suppress=missingIncludeSystem --suppress=unusedFunction $(INC_DIRS) src/foo.c
+	cppcheck --enable=all --suppress=unmatchedSuppression --suppress=missingIncludeSystem --suppress=unusedFunction $(INC_DIRS) src/foo.c
 
 valgrind:
 	$(GCC_COMPILER) -g -Wall -Wfatal-errors $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
