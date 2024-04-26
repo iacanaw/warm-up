@@ -10,6 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    compiler: gcc
+    gcc: 9
 
     steps:
     - uses: actions/checkout@v2
@@ -20,7 +22,7 @@ jobs:
     - name: make
       run: "cd app; make"
     - name: cov
-      run: "cd app; gcc --version; find /usr/lib/gcc -name libgcov.a; make cov"
+      run: "cd app; make cov"
     - name: valgrind
       run: "cd app; make valgrind"
     - name: sanitizer
