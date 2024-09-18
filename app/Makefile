@@ -36,23 +36,23 @@ compile:
 	$(GCC_COMPILER) $(CFLAGS) $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
 
 cppcheck:
-	cppcheck --enable=all --suppress=unmatchedSuppression --suppress=missingIncludeSystem --suppress=unusedFunction $(INC_DIRS) src/foo.c
+	cppcheck --enable=all --suppress=missingIncludeSystem --suppress=unusedFunction $(INC_DIRS) src/foo.c
 
 valgrind:
 	$(GCC_COMPILER) -g -Wall -Wfatal-errors $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
 	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET) -v
 
 sanitizer:
-	$(CLANG_COMPILER) -g -Wall -Wfatal-errors -fsanitize=address $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
+	$(CLANG_COMPILER) -g -Wall -Wfatal-errors $(SANITIZER_FLAGS) $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
 	./$(TARGET) -v
 
-cov:
-	$(GCC_COMPILER) $(CFLAGS) -fprofile-arcs -ftest-coverage $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
+gcov:
+	$(GCC_COMPILER) $(CFLAGS) $(COV_FLAGS) $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
 	./$(TARGET) -v
-	gcov -b all_tests.out-foo.gcno
+	gcov -a -b -j -k -m -q *.gcno *.gcda
 
 run:
 	./$(TARGET) -v
 
 clean:
-	rm -fr $(TARGET) *.gcno *.gcda *.gcov *.dSYM 
+	rm -fr $(TARGET) *.gcno *.gcda *.gcov *.dSYM *.out
