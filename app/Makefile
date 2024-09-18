@@ -1,5 +1,3 @@
-# Author: Rafael Garibotti
-
 GCC_COMPILER=gcc
 CLANG_COMPILER=clang
 
@@ -43,7 +41,7 @@ valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all ./$(TARGET) -v
 
 sanitizer:
-	$(CLANG_COMPILER) -g -Wall -Wfatal-errors $(SANITIZER_FLAGS) $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
+	$(GCC_COMPILER) -g -Wall -Wfatal-errors $(SANITIZER_FLAGS) $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
 	./$(TARGET) -v
 
 cov:
