@@ -46,10 +46,11 @@ sanitizer:
 	$(CLANG_COMPILER) -g -Wall -Wfatal-errors $(SANITIZER_FLAGS) $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
 	./$(TARGET) -v
 
-gcov:
-	$(GCC_COMPILER) $(CFLAGS) $(COV_FLAGS) $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
+cov:
+	$(GCC_COMPILER) $(CFLAGS) -fprofile-arcs -ftest-coverage $(INC_DIRS) $(SRC_FILES) -o $(TARGET)
 	./$(TARGET) -v
-	gcov -a -b -j -k -m -q *.gcno *.gcda
+	gcov -b *.gcno
+	gcovr
 
 run:
 	./$(TARGET) -v
